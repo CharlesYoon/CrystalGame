@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Crystal Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <div class = "container-fluid">
+        <div class = "row">
+            <div class = "container">
+                <h1>Crystal Collector!</h1>
+            </div>
+        </div>
+        <div class = "row">
+            <div class = "container" id = "textBox">
+                <p>You will be given a random number at the start of the game.</p>
+                <p>There are four crystals below. By clicking on a crystal you will add a specific amount of points to your total score.</p>
+                <p>You win the game by matching your total score to the random number. You lose the game if your total score goes above the random number.</p>
+                <p>The value of each crystal is hidden from you until you click on it.</p>
+                <p>Each time when the game starts, the game will change the values of each crystal.</p>
+            </div>
+        </div>
+        <div class = "row">
+            <div class = "container" id = "scoreBoardContainer">
+                <div class = "col" id = "scoreBoard">
+                    <div class = "container">
+                        Target Number:
+                    </div>
+                    <div class = "container" id = "targetNumber"></div>
+                    <div class = "container">
+                        Wins:
+                    </div>
+                    <div class = "container" id = "wins">0</div>
+                    <div class = "container">
+                        Losses:
+                    </div>
+                    <div class = "container" id = "losses">0</div>
+                </div>
+            </div>
+        </div>
+        <div class = "row">
+            <!---this is where the crystal images are going in place-->
+            <div class = "container" id = "jewelArrangement">
+                <div class = "col-lg-3" id = "redCrystal">
+                    <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlHUTZPrKgTHigfuWm6RXELcGdY8OmQdNTBrnKwnzFlJVPHfDc" style = "width:100px;height:100px;">
+                </div>
+                <div class = "col-lg-3" id = "blueCrystal">
+                    <img src = "https://images-na.ssl-images-amazon.com/images/I/41CDCmrq53L.jpg" style = "width:100px;height:100px;">
+                </div>
+                <div class = "col-lg-3" id = "yellowCrystal">
+                    <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2lcgDlx1kdiwB_KQTaUvvBrHNpwhnfXDi6Bvud1gofhuIRhz4" style = "width:100px;height:100px;">
+                </div>
+                <div class = "col-lg-3" id = "greenCrystal">
+                    <img src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSALZ89pLy2WjdW5dCMcywXBYMIW2tTf5Hbg9T02VinMmCWxSE7" style = "width:100px;height:100px;">
+                </div>
+            </div>
+        </div>
+        <div class = "row">
+            <div class = "container">
+                <p>Your total score is:</p>
+            </div>
+            <div class = "container" id = "userNumber"></div>
+        </div>
+    </div>
+    <!---Jquery inputs here-->
+    <script>
+        //run the document functions here
+        $(document).ready(function(){
+            var computerChoose = Math.floor((Math.random()*(120 - 19)) + 19);
+            +$("#targetNumber").html(computerChoose);
+            var redCrystalValue = Math.floor((Math.random()*(12 - 1)) + 1);
+            var blueCrystal = Math.floor((Math.random()*(12 - 1)) + 1);
+            var yellowCrystal = Math.floor((Math.random()*(12 - 1)) + 1);
+            var greenCrystal = Math.floor((Math.random()*(12 - 1)) + 1);
+        
+            //buttons
+            function checkAndReset(){
+                if (+$("#userNumber").text() == +$("#targetNumber").text()){
+                    $("wins").html(`<div>${+$("#wins").text() + 1}<div>`);
+                    computerChoose = Math.floor((Math.random()*(120 - 19)) + 19);
+                    +$("#targetNumber").html(computerChoose);
+                    redCrystalValue = Math.floor((Math.random()*(12 - 1)) + 1);
+                    blueCrystal = Math.floor((Math.random()*(12 - 1)) + 1);
+                    yellowCrystal = Math.floor((Math.random()*(12 - 1)) + 1);
+                    greenCrystal = Math.floor((Math.random()*(12 - 1)) + 1);
+                    $("#userNumber").html(`<div>${0}<div>`);
+                }else if (+$("#userNumber").text() > computerChoose){
+                    $("#losses").html(`<div>${+$("#losses").text() + 1}<div>`);
+                    computerChoose = Math.floor((Math.random()*(120 - 19)) + 19);
+                    +$("#targetNumber").html(computerChoose);
+                    redCrystalValue = Math.floor((Math.random()*(12 - 1)) + 1);
+                    blueCrystal = Math.floor((Math.random()*(12 - 1)) + 1);
+                    yellowCrystal = Math.floor((Math.random()*(12 - 1)) + 1);
+                    greenCrystal = Math.floor((Math.random()*(12 - 1)) + 1);
+                    $("#userNumber").html(`<div>${0}<div>`);
+                }
+            }
+            $("#redCrystal").click(function(){
+                checkAndReset();
+                $("#userNumber").html(`<div>${+$("#userNumber").text() + redCrystalValue}<div>`);
+            });
+            $("#blueCrystal").click(function(){
+                checkAndReset();
+                $("#userNumber").html(`<div>${+$("#userNumber").text()+ blueCrystal}<div>`);
+            });
+            $("#yellowCrystal").click(function(){
+                checkAndReset();
+                $("#userNumber").html(`<div>${+$("#userNumber").text() + yellowCrystal}<div>`);
+            });
+            $("#greenCrystal").click(function(){
+                checkAndReset();
+                $("#userNumber").html(`<div>${+$("#userNumber").text() + greenCrystal}<div>`);
+            });
+            
+        });
+    </script>
+</body>
+</html>
